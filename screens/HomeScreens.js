@@ -1,13 +1,40 @@
-import { Text, View } from 'react-native'
-import React, { Component } from 'react'
-import CustomButton from '../components/CustomButton'
+import { Text, View } from "react-native";
+import React, { Component } from "react";
+import CustomButton from "../components/CustomButton";
+import Card from "../components/Card";
+import { useNavigation } from "@react-navigation/native";
 
-export default class HomeScreens extends Component {
-  render() {
-    return (
-      <View>
-        <CustomButton title="Start Game" diTekan={() => {navigation.navigate("Game")}} />
-      </View>
-    )
-  }
+export default function HomeScreens() {
+  const navigation = useNavigation();
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        padding: 20,
+        backgroundColor: "#2c87cd",
+      }}
+    >
+      <Card>
+        <Text
+          style={{
+            fontSize: 28,
+            fontWeight: "bold",
+            textAlign: "center",
+            marginTop: 10,
+          }}
+        >
+          Tebak Angka
+        </Text>
+        <Text style={{ textAlign: "center", marginVertical: 10 }}>
+          Tebak Angka Diantara 1-100
+        </Text>
+        <CustomButton
+          onPress={() => navigation.navigate("Game")}
+          title="Mulai"
+        />
+      </Card>
+    </View>
+  );
 }

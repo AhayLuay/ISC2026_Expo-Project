@@ -1,12 +1,10 @@
-import { Text, View } from 'react-native'
-import React, { Component } from 'react'
+import { Text, View } from "react-native";
+import React, { Component } from "react";
 
-export default class ResultScreens extends Component {
-  render() {
-    return (
-      <View>
-        <Text>ResultScreens</Text>
-      </View>
-    )
-  }
+export default function ResultScreens() {
+  return (
+    <View>
+      <Text>ResultScreens</Text>
+    </View>
+  );
 }
