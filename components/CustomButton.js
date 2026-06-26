@@ -8,7 +8,9 @@ export default function CustomButton({ onPress, title }) {
       style={{
         backgroundColor: "blue",
         padding: 10,
-        borderRadius: 5,
+        marginVertical: 5,
+        borderRadius: 10,
+        alignContent: "center"
       }}
     >
       <Text style={{ textAlign: "center", color: "#ffffff" }}>{title}</Text>

@@ -1,64 +1,66 @@
-import { Text, View, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import { Text, View, StyleSheet, Alert } from "react-native";
+import React, { useEffect, useState } from "react";
 import CustomButton from "../components/CustomButton";
 import Card from "../components/Card"; // Jangan lupa import Card
 import Color from "../constants/Color";
+import CustomInput from "../components/CustomInput";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import { generateNumber } from "../utils/generateNumber";
 
 export default function GameScreens() {
-  
-  const { attempts, setAttempts } = useState(0);
-  /*
-  const guess;
+  const [ attempts, setAttempts ] = useState(0);
+  const [ guess, setGuess] = useState("");
+  const [ target, setTarget] = useState(0);
+  const [ message, setMessage] = useState("")
 
+  const navigation = useNavigation()
 
-  const handleGuess = () => {
-    if (gameOver) {
-      Alert.alert("Permainan Selesai", "Tekan tombol Reset untuk memulai ulang");
+  useEffect(() => {
+    setTarget(generateNumber())
+  }, []);
+
+  const checkAnswer = () => {
+    const number = parseInt(guess);
+
+    if (!number) {
+      Alert.alert("error", "Masukkan Angka");
       return;
     }
-
-    const guessNumber = parseInt(guess);
-    
-    // Validasi input
-    if (isNaN(guessNumber) || guess.trim() === "") {
-      setMessage(" Silakan masukkan angka yang valid!");
-      setGuess("");
-      return;
-    } 
-
-    if (guessNumber < 1 || guessNumber > 100) {
-      setMessage("⚠️ Angka harus antara 1 - 100!");
-      setGuess("");
-      return;
-    }
-
-    // Logika tebakan
-    setAttempts(attempts + 1);
-
-    if (guessNumber === targetNumber) {
-      setMessage(`🎉 SELAMAT! Anda menebak dengan benar! Angkanya adalah ${targetNumber}`);
-      setGameOver(true);
-      Alert.alert(
-        "Selamat! 🎉",
-        `Anda berhasil menebak angka ${targetNumber} dalam ${attempts + 1} percobaan!`,
-        [{ text: "OK" }]
-      );
-    } else if (guessNumber < targetNumber) {
-      setMessage(`📈 Terlalu kecil! Coba angka yang lebih besar dari ${guessNumber}`);
-    } else {
-      setMessage(`📉 Terlalu besar! Coba angka yang lebih kecil dari ${guessNumber}`);
-    }
-
-    setGuess("");
-  };*/
+    setAttempts((prev) => prev + 1)
+      
+    if(number > target) {
+      setMessage ("Tebakan Terlalu Tinggi");
+      } else if (number < target) {
+        setMessage("Tebakan Terlalu Rendah")
+      }else {
+        navigation.navigate("Result", {attempt: attempts + 1})
+      }
+        
+      setGuess("") //setelah pindah halaman akan merestart jawaban
+    };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Card>
-        <Text>Tebak angka 1 - 100</Text>
-        <CustomButton title="Tebak" />
-        <Text>Percobaan:{attempts}</Text>
-        <Text></Text>
+        <Ionicons
+        name="help-circle"
+        size={50}
+        color={Color.primary}
+        style={{ alignSelf: "center"}}
+        />
+        <Text style={styles.tebakText}>Tebak angka 1 - 100</Text>
+          <CustomInput
+            placeholder="Masukkan tebakan"
+            keyboardType="numeric" 
+            value={guess} 
+            onChangeText={setGuess}
+            />
+          <CustomButton title="Tebak" onPress={checkAnswer} />
+          <Text style={styles.percobaanText}> percobaan: {attempts} </Text>
+          <Text style={styles.percobaanText, {fontWeight: "bold", alignSelf:"center" }}>
+            Pesan: {message}
+          </Text>
       </Card>
     </View>
   );
@@ -69,11 +71,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     padding: 20,
-    backgroundColor: Color.background,
+    backgroundColor: Color.primary,
   },
   tebakText: {
     fontSize: 18,
     marginVertical: 15,
     textAlign: "center",
   },
+  percobaanText: {
+    marginTop: 20,
+    textAlign: "center",
+    fontSize: 16,
+  }
 });

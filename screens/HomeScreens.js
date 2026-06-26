@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import CustomButton from "../components/CustomButton";
 import Card from "../components/Card";
 import { useNavigation } from "@react-navigation/native";
+import Color from "../constants/Color";
 
 export default function HomeScreens() {
   const navigation = useNavigation();
@@ -13,7 +14,7 @@ export default function HomeScreens() {
         flex: 1,
         justifyContent: "center",
         padding: 20,
-        backgroundColor: "#2c87cd",
+        backgroundColor: Color.primary,
       }}
     >
       <Card>

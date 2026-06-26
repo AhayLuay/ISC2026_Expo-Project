@@ -7,8 +7,8 @@ export default function CustomInput(props) {
     style={{
         borderWidth: 1,
         borderColor: "Gray",
-        borderRadius: 12,
-        padding: 15, 
+        borderRadius: 10,
+        padding: 10, 
         fontSize: 18,
         textAlign: "center"
     }}
